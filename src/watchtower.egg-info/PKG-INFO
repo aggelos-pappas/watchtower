@@ -1,0 +1,52 @@
+Metadata-Version: 2.4
+Name: watchtower
+Version: 0.1.0
+Summary: Backend foundation for Watchtower
+Requires-Python: >=3.12
+Description-Content-Type: text/markdown
+Requires-Dist: fastapi<1.0,>=0.115
+Requires-Dist: uvicorn[standard]<1.0,>=0.30
+Requires-Dist: sqlalchemy<3.0,>=2.0
+Requires-Dist: alembic<2.0,>=1.13
+Requires-Dist: pydantic-settings<3.0,>=2.3
+Requires-Dist: typer<1.0,>=0.12
+Requires-Dist: apscheduler<4.0,>=3.10
+Requires-Dist: httpx<1.0,>=0.27
+Requires-Dist: beautifulsoup4<5.0,>=4.12
+Requires-Dist: icalendar<6.0,>=5.0
+Requires-Dist: python-dateutil<3.0,>=2.9
+Requires-Dist: playwright<2.0,>=1.45
+Provides-Extra: dev
+Requires-Dist: pytest>=8.0; extra == "dev"
+Requires-Dist: pytest-cov>=5.0; extra == "dev"
+Requires-Dist: ruff>=0.5; extra == "dev"
+Requires-Dist: mypy>=1.10; extra == "dev"
+
+# Watchtower
+
+Watchtower is a modular backend for personal monitoring and calendar organization.
+
+## Features
+- monitor websites and sources
+- extract structured events from HTML
+- reconcile and persist changes
+- export iCalendar data
+- FastAPI + Typer backend foundation
+
+## Local installation
+python -m venv .venv
+. .venv/bin/activate
+pip install -e ".[dev]"
+alembic upgrade head
+
+## Running the API
+uvicorn watchtower.interfaces.api.app:app --reload
+
+## Running the worker
+watchtower worker
+
+## CLI
+watchtower health
+watchtower watch add https://example.com --name "Example" --source-type http --extraction-type html
+watchtower watch list
+watchtower event export-ics output.ics
